@@ -60,28 +60,6 @@ const onEditorReady = (scene: Scene, gizmoManager: GizmoManager) => {
 
   if (gizmoManager.gizmos.scaleGizmo?.scaleRatio)
     gizmoManager.gizmos.scaleGizmo.scaleRatio = 0.7
-
-  // <======== イベントリスナの設定
-
-  // scene.onPointerDown = (evt: IPointerEvent) => {
-  //   if (evt.inputIndex == PointerInput.MiddleClick) return
-
-  //   const ray = scene.createPickingRay(
-  //     scene.pointerX,
-  //     scene.pointerY,
-  //     Matrix.Identity(),
-  //     camera,
-  //     false
-  //   )
-  //   const hit = scene.pickWithRay(ray)
-
-  //   if (gizmoManager) gizmoManager.attachToMesh(null)
-  //   const picked = hit?.pickedMesh
-
-  //   if (picked) {
-  //     gizmoManager.attachToMesh(picked)
-  //   }
-  // }
 }
 
 /**
@@ -91,8 +69,9 @@ const onEditorReady = (scene: Scene, gizmoManager: GizmoManager) => {
  * シーンのレンダー毎に実行
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onEditorRendered = (_scene: Scene) => {
-  // do nothing.
+const onEditorRendered = (scene: Scene) => {
+  const target = scene.getMeshByName("annotate")
+  target?.lookAt(scene.cameras[0].position)
 }
 
 export { onEditorReady, onEditorRendered }

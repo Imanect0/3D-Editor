@@ -6,9 +6,10 @@ import {
   PointerInput,
   Observer,
   PointerInfo,
-  Vector3,
+  CreateSphere,
 } from "@babylonjs/core"
-import { Button3D, GUI3DManager } from "@babylonjs/gui/3D"
+
+import { GUI3DManager } from "@babylonjs/gui/3D"
 import { Nullable } from "babylonjs"
 
 export class SceneObservable {
@@ -53,19 +54,21 @@ export class SceneObservable {
       )
       const hit = this.scene.pickWithRay(ray)
 
-      const picked = hit?.pickedMesh
-
-      if (picked) {
-        // これだと生成はされるけど上手く動かない
-        const button = new Button3D("Hello")
-        button.position = new Vector3(
-          hit.pickedPoint?._x,
-          hit.pickedPoint?._y,
-          hit.pickedPoint?._z
+      if (hit?.pickedPoint) {
+        const sample = CreateSphere(
+          "annotate",
+          { segments: 8, diameter: 0.1 },
+          this.scene
         )
-        button.position.z = 3
-        this.manager.addControl(button)
-        console.log("hit", hit.pickedPoint)
+
+        sample.position.copyFromFloats(
+          hit.pickedPoint.x,
+          hit.pickedPoint.y,
+          hit.pickedPoint.z
+        )
+
+        const camera = this.scene.cameras[0]
+        sample.lookAt(camera.position)
       }
     }
   }
