@@ -15,7 +15,6 @@ Babylon.jsで軽量かつ操作が容易な3Dエディタを作ろうとして�
 `cd 3D-Editor`
 3. `yarn`と打つ
 4. `yarn dev`と打つ
-（→エラーが起きた場合、3.で`yarn add next@latest react@latest react-dom@latest`により解決するかも）
 5. http://localhost:3000/ にアクセスする
 
 
